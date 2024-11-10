@@ -39,5 +39,19 @@ namespace Infrastructure.Repositories
                 .Student.AsNoTracking()
                 .SingleOrDefaultAsync(d => d.Name == name, cancellationToken);
         }
+
+        public async Task<bool> IsExists(
+            string name,
+            CancellationToken cancellationToken)
+        {
+            return await _applicationDbContext
+                .Student.AsNoTracking()
+                .SingleOrDefaultAsync(d => d.Name == name, cancellationToken) != null;
+        }
+
+        public async Task<List<Student>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await _applicationDbContext.Student.ToListAsync();
+        }
     }
 }

@@ -16,5 +16,11 @@ namespace Domain.Models.Student
             string name,
             CancellationToken cancellationToken);
 
+        Task<bool> IsExists(
+            string name,
+            CancellationToken cancellationToken);
+
+        Task<List<Student>> GetAllAsync(CancellationToken cancellationToken);
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Course;
+using Domain.Models.Student;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,20 @@ namespace Infrastructure.Repositories
             return await _applicationDbContext
                 .Course.AsNoTracking()
                 .SingleOrDefaultAsync(d => d.Name == name, cancellationToken);
+        }
+
+        public async Task<bool> IsExists(
+            string name,
+            CancellationToken cancellationToken)
+        {
+            return await _applicationDbContext
+                .Course.AsNoTracking()
+                .SingleOrDefaultAsync(d => d.Name == name, cancellationToken) != null;
+        }
+
+        public async Task<List<Course>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await _applicationDbContext.Course.ToListAsync();
         }
     }
 }
