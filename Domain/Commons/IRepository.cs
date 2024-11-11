@@ -2,11 +2,11 @@
 {
     public interface IRepository<T> where T : class
     {
-        Task<bool> CreateAsync(
+        Task<T?> CreateAsync(
             T entity,
             CancellationToken cancellationToken);
 
-        Task<bool> UpdateAsync(
+        Task<T?> UpdateAsync(
             T entity,
             CancellationToken cancellationToken);
         Task<bool> DeleteAsync(

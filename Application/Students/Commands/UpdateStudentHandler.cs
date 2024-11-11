@@ -10,24 +10,25 @@ using System.Threading.Tasks;
 
 namespace Application.Students.Commands
 {
-    public class CreateStudentHandler : IRequestHandler<CreateStudentCommand, StudentDTO>
+    public class UpdateStudentHandler : IRequestHandler<UpdateStudentCommand, StudentDTO>
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IMapper _mapper;
 
-        public CreateStudentHandler(IStudentRepository studentRepository, IMapper mapper)
+        public UpdateStudentHandler(IStudentRepository studentRepository, IMapper mapper)
         {
             _studentRepository = studentRepository;
             _mapper = mapper;
         }
-        public async Task<StudentDTO> Handle(CreateStudentCommand command, CancellationToken cancellationToken)
+        public async Task<StudentDTO> Handle(UpdateStudentCommand command, CancellationToken cancellationToken)
         {
             var student = new Student()
             {
+                Id = command.Id,
                 Name = command.Name,
             };
 
-            return _mapper.Map<StudentDTO>(await _studentRepository.CreateAsync(student, cancellationToken));
+            return _mapper.Map<StudentDTO>(await _studentRepository.UpdateAsync(student, cancellationToken));
         }
     }
 }

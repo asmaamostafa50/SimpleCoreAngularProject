@@ -25,11 +25,25 @@ namespace API.Controllers
             return studentDetails;
         }
 
+        [HttpGet]
+        [Route("getStudent")]
+        public async Task<StudentDTO> GetStudentAsync(int? id)
+        {
+            var student = await mediator.Send(new GetStudentQuery { Id = id ?? 0});
+            return student;
+        }
 
         [HttpPost]
-        public async Task<bool> AddStudentAsync(StudentDTO student)
+        public async Task<StudentDTO> AddStudentAsync(StudentDTO student)
         {
             var studentDetail = await mediator.Send(new CreateStudentCommand { Name = student.Name });
+            return studentDetail;
+        }
+
+        [HttpPut]
+        public async Task<StudentDTO> UpdateStudentAsync(StudentDTO student)
+        {
+            var studentDetail = await mediator.Send(new UpdateStudentCommand {Id = student.Id, Name = student.Name });
             return studentDetail;
         }
     }

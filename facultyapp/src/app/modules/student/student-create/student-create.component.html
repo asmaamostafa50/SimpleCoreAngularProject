@@ -1,0 +1,38 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="title py-3">
+      <h1>{{name}}</h1>
+    </div>
+    <div *ngIf="!(isLoading$ | async) && submitted" class="message">
+      <p *ngIf="!(error$ | async)" class="text-success">Saved Successfull!</p>
+      <p *ngIf="(error$ | async)" class="text-danger">{{(error$ | async)}}</p>
+    </div>
+    <form [formGroup]="studentForm" (ngSubmit)="studentForm.valid && onSubmitStudent()" method="student">
+      <div class="mb-3">
+        <label class="form-label" for="name">Name<span class="text-danger">*</span></label>
+        <input formControlName="name" class="form-control" type="text" required="" id="name"
+          [ngClass]="{'is-invalid': studentForm.get('name')?.invalid  && (studentForm.get('name')?.dirty || studentForm.get('name')?.touched)}">
+        <div *ngIf="studentForm.get('name')?.invalid  && (studentForm.get('name')?.dirty || studentForm.get('name')?.touched)"
+          class="invalid-feedback">
+          <div *ngIf="studentForm.get('name')?.errors?.['required']">
+            Please enter name!.
+          </div>
+          <div *ngIf="studentForm.get('name')?.errors?.['maxlength']">
+            name must be at least 70 characters long.
+          </div>
+          <div *ngIf="studentForm.get('name')?.errors?.['forbiddenName']">
+            name cannot be Bob.
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button [disabled]="!studentForm.valid || (isLoading$ | async)"
+          class="btn btn-success fw-normal shadow-none d-inline-block me-2" type="submit">Save
+          <span *ngIf="(isLoading$ | async) && studentForm.valid"
+            class="spinner-border spinner-border-sm mx-2"></span></button>
+        <a [routerLink]="['/student']" class="btn btn-danger fw-normal shadow-none d-inline-block">Back</a>
+      </div>
+
+    </form>
+
+  </div>
